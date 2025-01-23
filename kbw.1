@@ -1,0 +1,288 @@
+.TH KBW 1 "Version 1.5 - 14 January 2025" "KBW" "KeyBoard Wanderer Manual"
+.SH NAME
+KeyBoard Wanderer (KBW) \- Generates words by walking on a specified keyboard
+.SY
+.SH SYNOPSIS
+.B kbw
+.OP OPTIONS... 
+
+.YS
+
+.SH DESCRIPTION
+.B kbw
+generates words starting with a specified characters by moving along neighbour
+keys on a specified keyboard
+
+.SH OPTIONS
+.TP
+.B -a, --arrangement
+path for a keboard configuration file. See
+.B KEYBOARD CONFIGURATION FILE
+below.
+.TP
+.B -d, --dryrun
+only count the generated words
+.TP
+.B -i, --infinite
+when the generation is completed causes the program to sleep until a signal is
+delivered that either terminates the process or causes the invocation of a
+signal-catching function.
+.TP
+.B -k, --keys
+list of initial main keys. See 
+.B LIST OF KEYS
+below.
+
+.TP
+.B -m, --min
+minimum word length to generate
+.TP
+.B -M, --max
+maximum word length to generate
+.TP
+.B -l, --logfile
+log file path. See
+.B LOGFILE
+below.
+.TP
+.B -s, --stop
+integer value (> 0) representing a timeout. When the timeout expires a SIGALRM
+is sent to the process. This option is useful when the
+.BR -i ,
+.BR --infinite
+is set, otherwise the kbw process should be terminated manually.
+.TP
+.B -w, --restart
+to specify a starting string for the generation. The last generated string of a
+previous run can be used, if the same configuration is used the execution will
+continue from that point.
+
+.SH USAGE
+.SS LOGFILE
+The
+.BR -l ,
+.BR --logfile
+option is mandatory and identifies a path to a logfile. This file will contain
+information on the run and the handled signals. Handled signals are
+.BR SIGSEGV ,
+.BR SIGTERM ,
+.BR SIGINT ,
+and,
+.BR SIGALRM 
+which is also used in case a timeout is installed
+(section 
+.BR TIMEOUT
+). When 
+.BR kbw
+is compiled in debug mode (make debug) the log file also shows a message every
+500'000'000 generated words (or less at the generation completion).
+
+.SS KEYBOARD CONFIGURATION FILE
+The option
+.B -a, --arrangment
+is used to supply a keyboard configuration file which defines the se of
+.BR keys,
+and the
+.BR shift 
+.BR variants
+for each key, as well as their set of neighbours. The configuration file
+.BR must
+use an 8-bit character encoding, such as the 
+.BR ASCII
+or 
+.BR ISO-8859
+family. The output will follow the same encoding. The configuration file
+.BR must
+also adhere to
+the following structure:
+
+an arbitrary long header composed of either empty lines or lines starting with the character
+.BR #
+is treated as comment and skipped, the actual line count starts after the
+header. The header is not mandatory and can be omitted.
+.
+.TP
+.BI Line_1: 
+N  number of main keys (shift variants are not main keys)
+.
+.TP
+.BI Line_2...Line_N+1: 
+keys in the format
+.SP
+.BR -c<sv>
+.SP
+where
+.BR -
+is a fixed dash character which precede the key definition,
+.BR c,
+is the base character for the key,
+.BR <sv>
+the optional list of 
+.BR shift
+.BR variant
+characters associated with the base character
+.BR c .
+The dash character at the beginning of the line is important to distinguish
+between an empty line and a line defining the space key without
+.BR shift
+.BR variants .
+
+For example, the line
+.B -1!
+means that the main key has associated the character
+.BR 1 ,
+and there is only one
+.BR shift
+.BR variants
+which is the character
+.BR ! .
+
+With multiple
+.BR shift
+.BR variants
+we can define the line
+.B -+*]}
+where
+.BR +
+is the base character and
+.BR *]}
+its three
+.BR shift
+.BR variants .
+.
+.TP
+.BI Line_N+2:
+an empty line
+.
+.TP
+.BI Line_N+3...Line_2N+2:
+the list of neighbours, represented as main characters, for each key in the format
+.SP
+.B c:<list_of_main_characters>
+.SP
+for example for distance-1 main key
+.BR g
+a possible line can be
+.BR g:ftyhvb .
+
+.SS LIST OF KEYS (option -k)
+Note that the list of keys passed with the option
+.BR -k
+should adhere with the encoding used for the configuration file (see
+.B KEYBOARD CONFIGURATION FILE
+)
+otherwise the result may be inconsistent. Pay attention to the encoding
+automatically used by the Terminal or CLI used to run Keyboard Wanderer, since
+special characters (like accented letters) are often encoded with multy-byte
+UTF-8 encoding. As specified in the section
+.B KEYBOARD CONFIGURATION FILE
+multi-byte encoding is not allowed in configuration file, as well as in the list
+of characters passed for this option.
+
+.SH EXAMPLES
+.SS KEYBOARD CONFIGURATION FILE
+.EX
+--------------------------8<--------------------------
+# Test keyboard 
+#
+# full set of base keys to use with -k:
+# "1234567890qwertyuiopasdfghjkl'zxcvbnm.  ,"
+
+40
+-1!_
+-2"#
+-3\\
+-4$@
+-5%<
+-6^>
+-7&[
+-8*]
+-9({
+-0)}
+-qQ
+-wW
+-eE
+-rR
+-tT
+-yY
+-uU
+-iI+
+-oO-
+-pP=
+-aA
+-sS
+-dD
+-fF
+-gG
+-hH
+-jJ
+-kK
+-lL;
+-'~:
+-zZ
+-xX
+-cC
+-vV
+-bB
+-nN
+-mM
+-.?
+- 
+-,/
+
+1:qw2
+2:1we3
+3:2er4
+4:3rt5
+5:4ty6
+6:5yu7
+7:6ui8
+8:7io9
+9:8op0
+0:9p
+q:1wa
+w:q12eas
+e:w23rsd
+r:e34tdf
+t:r45yfg
+y:t56ugh
+u:y67ihj
+i:u78ojk
+o:i89pkl
+p:o90l'
+a:qwsz
+s:awedzx
+d:serfxc
+f:drtgcv
+g:ftyhvb
+h:gyujbn
+j:huiknm
+k:jiolm.
+l:kop'.
+\&':pl
+z:asx
+x:zsdc 
+c:xdfv 
+v:cfgb 
+b:vghn 
+n:bhjm ,
+m:njk. ,
+\&.:mkl,
+ :xcvbnm,
+,: nm.
+-------------------------->8--------------------------
+.EE
+
+.SS LAUNCH
+The following example runs the generator with only the
+.BR abcd
+initial characters, sets min length 1 and max length 3, writing the output to stdout
+.PP
+.RS
+\f(CW\&./kbw -a test_keyboard.kbwp -k "abcd" -m 1 -M 3 -l /tmp/logfile.log
+
+.SH COPYRIGHT
+ MIT License
+ Copyright (c) 2024 Infosystem Security s.r.l.
+ See the LICENSE file for full terms.
+.RE
