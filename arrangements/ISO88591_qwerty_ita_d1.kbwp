@@ -1,0 +1,110 @@
+# QWERTY KEYBOARD WITH ITALIAN LAYOUT CONFIGURATION FILE
+# Keyboard layout from laptop DELL Latitude 7480
+# FULL SET OF KEYS WITH DISTANCE-1 STEPS + REPETITIONS
+#
+# Consider the most common keys used in italian language.
+#
+# full set of base keys to use with -k: "\1234567890'мqwertyuiopи+asdfghjklтащ<zxcvbnm ,.-"
+# Note: this configuration file assumes ISO-8859-1 character encoding, the
+# characters passed via -k option must be encoded with ISO-8859-1 as well.
+
+49
+-\|
+-1!
+-2"
+-3Ј
+-4$
+-5%
+-6&
+-7/
+-8(
+-9)
+-0=
+-'?
+-м^~
+-qQ
+-wW
+-eE
+-rR
+-tT
+-yY
+-uU
+-iI
+-oO
+-pP
+-ий[{
+-+*]}
+-aA
+-sS
+-dD
+-fF
+-gG
+-hH
+-jJ
+-kK
+-lL
+-тз@
+-а#
+-щ
+-<>
+-zZ
+-xX
+-cC
+-vV
+-bB
+-nN
+-mM
+- 
+-,;
+-.:
+--_
+
+\:\1
+1:1\q2
+2:21qw3
+3:32we4
+4:43er5
+5:54rt6
+6:65ty7
+7:76yu8
+8:87ui9
+9:98io0
+0:09op'
+':'0pим
+м:'и+
+q:qasw21
+w:wqasde32
+e:ewsdfr43
+r:redfgt54
+t:trfghy65
+y:ytghju76
+u:uyhjki87
+i:iujklo98
+o:iklp09
+p:polти'0
+и:иpтащ+м'
++:+иащм
+a:a<zswq
+s:sazxdewq
+d:dsxcfrew
+f:fdcvgtre
+g:gfvbhytr
+h:hgbnjuyt
+j:jhnmkiuy
+k:kjm,loiu
+l:lk,.тpoi
+т:тl.-аиpo
+а:ат-щ+иp
+щ:ща+и
+<:<za
+z:z<xsa
+x:xz cds
+c:cx vfd
+v:vc bgf
+b:bv nhg
+n:nb mjh
+m:mn ,kj
+ : xcvbnm,
+,:,m .lk
+.:.,-тl
+-:-.ат
