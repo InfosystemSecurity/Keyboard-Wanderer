@@ -19,10 +19,13 @@ void usage(const char *fname)
             -s,--stop           stop timer; < 0 error; == 0 no timer set; > 0 number of seconds\n\
             -w,--restart        restart string\n\
             \n\n\
+            Visit\n\
+            \thttps://github.com/InfosystemSecurity/Keyboard-Wanderer\n\
+            for the manual and details.\n\n\n\
             MIT License\n\
             Copyright (c) 2024 Infosystem Security s.r.l.\n\
             See the LICENSE file for full terms.\n\
-            \n\n", fname);
+            \n", fname);
     return;
 }
 
